@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.activity.dao.RocIdUserMapper">
+	
+	<resultMap type="com.example.demo.activity.entity.RocIdUser" id="rocmuserapper">
+		<id property="id" column="id"></id>
+		<result property="userName" column="user_name"/>
+		<result property="nickName" column="nick_name"/>
+		<result property="passWord" column="pass_word"/>
+		<collection property="rocIdRole" column="user_id" ofType="com.example.demo.activity.entity.RocIdRole">
+			<id property="id" column="role_id"/>
+		</collection>
+	</resultMap>
+
+
+    <select id="selectById" resultType="com.example.demo.activity.entity.RocIdUser" resultMap="rocmuserapper">
+        select
+            u.id,u.user_name,u.nick_name,u.password,u.salt,u.status,r.role_id from  
+        	roc_id_user u left join roc_id_user_role r on u.id = r.user_id and u.user_id = #{id} 
+    </select>
+
+   
+</mapper>
